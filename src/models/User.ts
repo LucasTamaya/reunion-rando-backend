@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-import { UserModel } from "src/types";
+import { UserModel } from "../types";
 
 const UserSchema: Schema = new Schema({
   lastname: { type: String, required: true },

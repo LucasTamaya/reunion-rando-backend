@@ -3,9 +3,9 @@ require("dotenv").config();
 import supertest from "supertest";
 import sinon from "sinon";
 
-import * as UserServices from "../../src/services/userServices";
+import * as UserServices from "@/services/userServices";
+import { registerBody } from "../mocks/authControllersData";
 import { app } from "../../jestSetup";
-import { registerBody, registerResponse } from "../mocks/authControllersData";
 
 describe("RegisterController", () => {
   it("should returns a 200 status code if there are no errors", async () => {

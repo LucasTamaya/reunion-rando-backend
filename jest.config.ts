@@ -6,4 +6,8 @@ export default {
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   setupFilesAfterEnv: ["<rootDir>/jestSetup.ts"],
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@tests/(.*)$": "<rootDir>/tests/$1",
+  },
 };

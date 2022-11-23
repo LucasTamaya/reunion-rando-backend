@@ -3,13 +3,12 @@ require("dotenv").config();
 import supertest from "supertest";
 import sinon from "sinon";
 
-import * as UserServices from "../../src/services/userServices";
+import * as UserServices from "@/services/userServices";
 import { app } from "../../jestSetup";
 import {
   loginBody,
   loginBodyWithWrongPassword,
   loginErrorResponse,
-  loginResponse,
   registerBody,
 } from "../mocks/authControllersData";
 
