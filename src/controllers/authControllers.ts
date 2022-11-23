@@ -12,7 +12,7 @@ export const RegisterController = async (req: Request, res: Response) => {
 
     if (user) {
       return res
-        .status(200)
+        .status(409)
         .json({ isError: true, message: "L'utilisateur existe déjà" });
     } else {
       const newUser: UserModelWithId = await saveNewUser(body);

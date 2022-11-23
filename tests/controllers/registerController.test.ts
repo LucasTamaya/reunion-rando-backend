@@ -54,7 +54,7 @@ describe("RegisterController", () => {
       .post("/register")
       .send(registerBody);
 
-    expect(statusCode).toBe(200);
+    expect(statusCode).toBe(409);
     expect(body).toEqual(registerErrorResponse);
   });
 
