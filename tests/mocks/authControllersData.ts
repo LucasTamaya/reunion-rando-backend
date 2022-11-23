@@ -15,6 +15,25 @@ export const registerErrorResponse = {
   message: "L'utilisateur existe déjà",
 };
 
+export const loginBody = {
+  email: "john.doe@orange.fr",
+  password: "123456",
+};
+
+export const loginBodyWithWrongPassword = {
+  email: "john.doe@orange.fr",
+  password: "faegagaeg",
+};
+
+export const loginResponse = {
+  isSuccess: true,
+};
+
+export const loginErrorResponse = {
+  isError: true,
+  message: "Email ou mot de passe incorrect",
+};
+
 export const unknownErrorResponse = {
   message: "Une erreur est survenue",
 };

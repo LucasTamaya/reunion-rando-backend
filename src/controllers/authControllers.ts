@@ -1,33 +1,53 @@
+import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
 import { getUserByEmail, saveNewUser } from "../services/userServices";
 import { UserModel, UserModelWithId } from "../types/index";
-import { createJwt } from "../services/authServices";
+import { createJwt, sendJwtToClient } from "../services/authServices";
+import { loginErrorResponse } from "../response";
 
 export const RegisterController = async (req: Request, res: Response) => {
-  try {
-    const body: UserModel = req.body;
+  const body: UserModel = req.body;
 
+  try {
     const user = await getUserByEmail(body.email);
 
     if (user) {
-      return res
-        .status(409)
-        .json({ isError: true, message: "L'utilisateur existe déjà" });
-    } else {
-      const newUser: UserModelWithId = await saveNewUser(body);
-
-      const token = createJwt(newUser);
-
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        // sameSite: "none"
-      });
-
-      return res.status(200).json({ isSuccess: true });
+      return res.sendStatus(409);
     }
-  } catch (err: any) {
-    return res.status(500).json({ message: "Une erreur est survenue" });
+
+    const newUser: UserModelWithId = await saveNewUser(body);
+
+    const token = createJwt(newUser);
+    sendJwtToClient(res, token);
+
+    return res.status(200).json({ isSuccess: true });
+  } catch (err) {
+    return res.sendStatus(500);
+  }
+};
+
+export const LoginController = async (req: Request, res: Response) => {
+  const { email, password }: UserModel = req.body;
+
+  try {
+    const user = await getUserByEmail(email);
+
+    if (!user) {
+      return res.status(200).json(loginErrorResponse);
+    }
+
+    const matchingPassword = await bcrypt.compare(password, user.password);
+
+    if (!matchingPassword) {
+      return res.status(200).json(loginErrorResponse);
+    }
+
+    const token = createJwt(user);
+    sendJwtToClient(res, token);
+
+    return res.status(200).json({ isSuccess: true });
+  } catch (err) {
+    return res.sendStatus(500);
   }
 };
