@@ -18,12 +18,9 @@ describe("LoginController", () => {
     // creates a new user before
     await supertest(app).post("/register").send(registerBody);
 
-    const { statusCode, body } = await supertest(app)
-      .post("/login")
-      .send(loginBody);
+    const { statusCode } = await supertest(app).post("/login").send(loginBody);
 
     expect(statusCode).toBe(200);
-    expect(body).toEqual(loginResponse);
   });
 
   it("should returns a 200 status code and en error message if the user doesn't exists", async () => {

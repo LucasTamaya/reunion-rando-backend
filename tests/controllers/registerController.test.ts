@@ -9,12 +9,11 @@ import { registerBody, registerResponse } from "../mocks/authControllersData";
 
 describe("RegisterController", () => {
   it("should returns a 200 status code if there are no errors", async () => {
-    const { statusCode, body } = await supertest(app)
+    const { statusCode } = await supertest(app)
       .post("/register")
       .send(registerBody);
 
     expect(statusCode).toBe(200);
-    expect(body).toEqual(registerResponse);
   });
 
   it("should returns a 409 status code if the user already exists", async () => {

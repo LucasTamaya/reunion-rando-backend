@@ -21,7 +21,7 @@ export const RegisterController = async (req: Request, res: Response) => {
     const token = createJwt(newUser);
     sendJwtToClient(res, token);
 
-    return res.status(200).json({ isSuccess: true });
+    return res.sendStatus(200);
   } catch (err) {
     return res.sendStatus(500);
   }
@@ -46,7 +46,7 @@ export const LoginController = async (req: Request, res: Response) => {
     const token = createJwt(user);
     sendJwtToClient(res, token);
 
-    return res.status(200).json({ isSuccess: true });
+    return res.sendStatus(200);
   } catch (err) {
     return res.sendStatus(500);
   }

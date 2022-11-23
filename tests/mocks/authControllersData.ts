@@ -31,7 +31,6 @@ export const loginResponse = {
 
 export const loginErrorResponse = {
   isError: true,
-  message: "Email ou mot de passe incorrect",
 };
 
 export const unknownErrorResponse = {
