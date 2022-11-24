@@ -13,13 +13,18 @@ import {
 } from "../mocks/authControllersData";
 
 describe("loginController", () => {
-  it("should returns a 200 status code if there are no errors", async () => {
+  it("should returns a 200 status code and the user role if there are no errors", async () => {
     // creates a new user before
     await supertest(app).post("/register").send(registerBody);
 
-    const { statusCode } = await supertest(app).post("/login").send(loginBody);
+    const { statusCode, body } = await supertest(app)
+      .post("/login")
+      .send(loginBody);
+
+    const mockedUserRole = { role: "particulier" };
 
     expect(statusCode).toBe(200);
+    expect(body).toEqual(mockedUserRole);
   });
 
   it("should returns a 200 status code and en error message if the user doesn't exists", async () => {

@@ -44,12 +44,11 @@ export const loginController = async (req: Request, res: Response) => {
     }
 
     const token = createJwt(user);
-
-    console.log(token);
+    console.log("token created: ", token);
 
     sendJwtToClient(res, token);
 
-    return res.sendStatus(200);
+    return res.status(200).json({ role: user.role });
   } catch (err) {
     return res.sendStatus(500);
   }

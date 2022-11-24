@@ -24,7 +24,7 @@ describe("getUserRoleController", () => {
       .get("/user/role")
       .set("Cookie", `token=${mockedJwt}`);
 
-    const mockedUserRole = "particulier";
+    const mockedUserRole = { role: "particulier" };
 
     expect(statusCode).toBe(200);
     expect(body).toEqual(mockedUserRole);

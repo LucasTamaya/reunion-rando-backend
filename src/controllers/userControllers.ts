@@ -7,5 +7,5 @@ export const getUserRoleController = async (req: Request, res: Response) => {
 
   const { role } = decodeJwtPayload(token);
 
-  return res.status(200).json(role);
+  return res.status(200).json({ role });
 };

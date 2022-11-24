@@ -1,9 +1,11 @@
 import bcrypt from "bcrypt";
 
 import User from "../models/User";
-import { UserModel } from "../types/index";
+import { UserModel, UserModelWithId } from "../types/index";
 
-export const getUserByEmail = async (email: string) => {
+export const getUserByEmail = async (
+  email: string
+): Promise<UserModelWithId | null> => {
   const user = await User.findOne({ email });
 
   if (user) {
