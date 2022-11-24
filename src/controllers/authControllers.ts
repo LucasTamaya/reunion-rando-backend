@@ -6,7 +6,7 @@ import { UserModel, UserModelWithId } from "../types/index";
 import { createJwt, sendJwtToClient } from "../services/authServices";
 import { loginErrorResponse } from "../response";
 
-export const RegisterController = async (req: Request, res: Response) => {
+export const registerController = async (req: Request, res: Response) => {
   const body: UserModel = req.body;
 
   try {
@@ -27,7 +27,7 @@ export const RegisterController = async (req: Request, res: Response) => {
   }
 };
 
-export const LoginController = async (req: Request, res: Response) => {
+export const loginController = async (req: Request, res: Response) => {
   const { email, password }: UserModel = req.body;
 
   try {
@@ -44,6 +44,9 @@ export const LoginController = async (req: Request, res: Response) => {
     }
 
     const token = createJwt(user);
+
+    console.log(token);
+
     sendJwtToClient(res, token);
 
     return res.sendStatus(200);

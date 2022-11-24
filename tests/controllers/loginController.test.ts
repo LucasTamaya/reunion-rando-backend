@@ -12,7 +12,7 @@ import {
   registerBody,
 } from "../mocks/authControllersData";
 
-describe("LoginController", () => {
+describe("loginController", () => {
   it("should returns a 200 status code if there are no errors", async () => {
     // creates a new user before
     await supertest(app).post("/register").send(registerBody);
