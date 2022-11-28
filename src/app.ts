@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 
 import { router as authRoutes } from "./routes/authRoutes";
 import { router as userRoutes } from "./routes/userRoutes";
+import { router as activityRoutes } from "./routes/hikeRoutes";
 
 export const createServer = () => {
   const app = express();
@@ -16,6 +17,7 @@ export const createServer = () => {
   // api routes
   app.use(authRoutes);
   app.use(userRoutes);
+  app.use(activityRoutes);
 
   return app;
 };
