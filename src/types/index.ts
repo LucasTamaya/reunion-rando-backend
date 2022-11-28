@@ -9,3 +9,10 @@ export interface UserModel {
 export interface UserModelWithId extends UserModel {
   id: string;
 }
+
+export interface ActivityModel {
+  title: string;
+  location: string;
+  price: number;
+  description: string;
+}

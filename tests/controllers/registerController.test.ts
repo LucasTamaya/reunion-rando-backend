@@ -6,8 +6,11 @@ import sinon from "sinon";
 import * as UserServices from "@/services/userServices";
 import { registerBody } from "../mocks/authControllersData";
 import { app } from "../../jestSetup";
-import prisma from "../../src/prisma/client";
+import prisma from "@/prisma/client";
 
+beforeAll(async () => {
+  await prisma.user.deleteMany();
+});
 afterEach(async () => {
   await prisma.user.deleteMany();
 });
@@ -37,7 +40,7 @@ describe("registerController", () => {
     expect(statusCode).toBe(409);
   });
 
-  it("should returns a 500 status code if there are any other erorrs", async () => {
+  it("should returns a 500 status code if there are any other errors", async () => {
     // simulates an error
     sinon.stub(UserServices, "getUserByEmail").throws(Error("error message"));
 

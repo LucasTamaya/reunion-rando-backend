@@ -13,7 +13,7 @@ describe("getAllHikesController", () => {
       .set("Cookie", `token=${mockedJwt}`);
 
     const mockedResponse = {
-      data: [
+      hikes: [
         { name: "Dos d'Ane - Cap Noir" },
         { name: "Canalisation Augustave-Aurère" },
         { name: "Hell bourg - Source Manouilh" },

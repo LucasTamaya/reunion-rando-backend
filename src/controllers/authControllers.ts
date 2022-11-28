@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
-import { getUserByEmail, saveNewUser } from "../services/userServices";
+import { getUserByEmail, createNewUser } from "../services/userServices";
 import { UserModel } from "../types/index";
 import { createJwt, sendJwtToClient } from "../services/authServices";
 import { loginErrorResponse } from "../response";
@@ -16,7 +16,7 @@ export const registerController = async (req: Request, res: Response) => {
       return res.sendStatus(409);
     }
 
-    const newUser = await saveNewUser(body);
+    const newUser = await createNewUser(body);
 
     const token = createJwt(newUser);
     sendJwtToClient(res, token);

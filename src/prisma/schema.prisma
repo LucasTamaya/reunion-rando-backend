@@ -24,3 +24,11 @@ model Hike {
   distance   Float
   difficulty Int
 }
+
+model Activity {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  location    String
+  price       Float
+  description String
+}
