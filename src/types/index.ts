@@ -7,5 +7,5 @@ export interface UserModel {
 }
 
 export interface UserModelWithId extends UserModel {
-  _id: string;
+  id: string;
 }

@@ -4,10 +4,15 @@ import jwt from "jsonwebtoken";
 import { UserModelWithId } from "../types/index";
 
 export const createJwt = (user: UserModelWithId) => {
-  const { email, lastname, role } = user;
-  return jwt.sign({ email, lastname, role }, process.env.JWT_SECRET!, {
+  const { id, role } = user;
+
+  const token = jwt.sign({ id, role }, process.env.JWT_SECRET!, {
     expiresIn: "1d",
   });
+
+  console.log("jwt created: ", token);
+
+  return token;
 };
 
 export const sendJwtToClient = (res: Response, token: string) => {
@@ -19,8 +24,7 @@ export const sendJwtToClient = (res: Response, token: string) => {
 };
 
 interface JwtPayloads {
-  email: string;
-  lastname: string;
+  id: string;
   role: string;
   iat: number;
   exp: number;
@@ -30,8 +34,6 @@ export const decodeJwtPayload = (token: string): JwtPayloads => {
   const decodedValue: JwtPayloads = JSON.parse(
     Buffer.from(payload, "base64").toString("ascii")
   );
-
-  console.log(decodedValue);
 
   return decodedValue;
 };

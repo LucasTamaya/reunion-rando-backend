@@ -8,6 +8,7 @@ import { app } from "../../jestSetup";
 import {
   loginBody,
   loginBodyWithWrongPassword,
+  loginBodyWithInexistingEmail,
   loginErrorResponse,
   registerBody,
 } from "../mocks/authControllersData";
@@ -25,7 +26,7 @@ describe("loginController", () => {
   it("should returns a 200 status code and en error message if the user doesn't exists", async () => {
     const { statusCode, body } = await supertest(app)
       .post("/login")
-      .send(loginBody);
+      .send(loginBodyWithInexistingEmail);
 
     expect(statusCode).toBe(200);
     expect(body).toEqual(loginErrorResponse);

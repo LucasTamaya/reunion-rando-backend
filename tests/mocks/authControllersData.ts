@@ -20,6 +20,10 @@ export const loginBody = {
   password: "123456",
 };
 
+export const loginBodyWithInexistingEmail = {
+  email: "kiki@orange.fr",
+  password: "123456",
+};
 export const loginBodyWithWrongPassword = {
   email: "john.doe@orange.fr",
   password: "faegagaeg",

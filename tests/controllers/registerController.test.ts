@@ -6,7 +6,15 @@ import sinon from "sinon";
 import * as UserServices from "@/services/userServices";
 import { registerBody } from "../mocks/authControllersData";
 import { app } from "../../jestSetup";
+import prisma from "../../src/prisma/client";
 
+afterEach(async () => {
+  await prisma.user.deleteMany();
+});
+
+afterAll(async () => {
+  await prisma.$disconnect();
+});
 describe("registerController", () => {
   it("should returns a 200 status code if there are no errors", async () => {
     const { statusCode } = await supertest(app)

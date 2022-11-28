@@ -7,10 +7,10 @@
     "forceConsistentCasingInFileNames": true,
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "sourceMap": true,
+    "outDir": "dist",
+    "lib": ["esnext"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],

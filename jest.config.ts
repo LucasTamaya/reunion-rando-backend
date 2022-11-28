@@ -10,4 +10,5 @@ export default {
     "^@/(.*)$": "<rootDir>/src/$1",
     "^@tests/(.*)$": "<rootDir>/tests/$1",
   },
+  testTimeout: 70000,
 };

@@ -4,12 +4,13 @@ import { NextFunction, Request, Response } from "express";
 export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token;
 
-  console.log("token from the client: ", token);
+  console.log(token);
 
   try {
     jwt.verify(token, process.env.JWT_SECRET!);
     next();
-  } catch (err) {
+  } catch (err: any) {
+    console.log("Error in the jwt middleware");
     res.clearCookie("token");
     return res.sendStatus(401);
   }

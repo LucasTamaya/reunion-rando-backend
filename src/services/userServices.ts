@@ -1,24 +1,19 @@
 import bcrypt from "bcrypt";
 
-import User from "../models/User";
 import { UserModel } from "../types/index";
+import prisma from "../prisma/client";
 
 export const getUserByEmail = async (email: string) => {
-  const user = await User.findOne({ email });
+  const user = await prisma.user.findUnique({ where: { email } });
 
-  if (user) {
-    return user;
-  } else {
-    return null;
-  }
+  return user;
 };
 
-export const saveNewUser = async ({ password, ...props }: UserModel) => {
+export const saveNewUser = async ({ password, ...userProps }: UserModel) => {
   const hashedPassword: string = await bcrypt.hash(password, 10);
-
-  const newUser = new User({ ...props, password: hashedPassword });
-
-  newUser.save();
+  const newUser = await prisma.user.create({
+    data: { ...userProps, password: hashedPassword },
+  });
 
   return newUser;
 };

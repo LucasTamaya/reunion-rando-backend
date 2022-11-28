@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
 import { getUserByEmail, saveNewUser } from "../services/userServices";
-import { UserModel, UserModelWithId } from "../types/index";
+import { UserModel } from "../types/index";
 import { createJwt, sendJwtToClient } from "../services/authServices";
 import { loginErrorResponse } from "../response";
 
@@ -16,13 +16,14 @@ export const registerController = async (req: Request, res: Response) => {
       return res.sendStatus(409);
     }
 
-    const newUser: UserModelWithId = await saveNewUser(body);
+    const newUser = await saveNewUser(body);
 
     const token = createJwt(newUser);
     sendJwtToClient(res, token);
 
     return res.sendStatus(200);
   } catch (err) {
+    console.log(err);
     return res.sendStatus(500);
   }
 };
@@ -44,12 +45,9 @@ export const loginController = async (req: Request, res: Response) => {
     }
 
     const token = createJwt(user);
-
-    console.log(token);
-
     sendJwtToClient(res, token);
 
-    return res.sendStatus(200);
+    return res.status(200).json({ role: user.role });
   } catch (err) {
     return res.sendStatus(500);
   }
