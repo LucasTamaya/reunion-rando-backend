@@ -4,6 +4,7 @@ export interface UserModel {
   email: string;
   password: string;
   role: string;
+  avatar: string;
 }
 
 export interface UserModelWithId extends UserModel {
@@ -15,4 +16,5 @@ export interface ActivityModel {
   location: string;
   price: number;
   description: string;
+  userId: string;
 }

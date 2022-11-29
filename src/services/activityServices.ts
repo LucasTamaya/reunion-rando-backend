@@ -7,3 +7,15 @@ export const createNewActivity = async ({ ...activityData }: ActivityModel) => {
   });
   return newActivity;
 };
+
+export const getAllActivities = async () => {
+  const activities = await prisma.activity.findMany({
+    include: {
+      createdBy: { select: { lastname: true, firstname: true, avatar: true } },
+    },
+  });
+
+  console.log(activities);
+
+  return activities;
+};

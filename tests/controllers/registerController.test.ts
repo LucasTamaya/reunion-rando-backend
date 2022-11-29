@@ -9,9 +9,12 @@ import { app } from "../../jestSetup";
 import prisma from "@/prisma/client";
 
 beforeAll(async () => {
+  await prisma.activity.deleteMany();
   await prisma.user.deleteMany();
 });
+
 afterEach(async () => {
+  await prisma.activity.deleteMany();
   await prisma.user.deleteMany();
 });
 

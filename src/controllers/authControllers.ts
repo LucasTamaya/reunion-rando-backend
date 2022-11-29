@@ -16,9 +16,9 @@ export const registerController = async (req: Request, res: Response) => {
       return res.sendStatus(409);
     }
 
-    const newUser = await createNewUser(body);
+    const { id, role } = await createNewUser(body);
 
-    const token = createJwt(newUser);
+    const token = createJwt(id, role);
     sendJwtToClient(res, token);
 
     return res.sendStatus(200);
@@ -44,10 +44,10 @@ export const loginController = async (req: Request, res: Response) => {
       return res.status(200).json(loginErrorResponse);
     }
 
-    const token = createJwt(user);
+    const token = createJwt(user.id, user.role);
     sendJwtToClient(res, token);
 
-    return res.status(200).json({ role: user.role });
+    return res.status(200).json({ role: user.role, id: user.id });
   } catch (err) {
     return res.sendStatus(500);
   }

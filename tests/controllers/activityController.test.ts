@@ -5,22 +5,15 @@ import sinon from "sinon";
 
 import { app, mockedJwt } from "../../jestSetup";
 import * as ActivityServices from "@/services/activityServices";
-import prisma from "@/prisma/client";
+import { ActivityModel } from "@/types/index";
 
-const newActivity = {
+const newActivity: ActivityModel = {
   title: "Super hike",
   price: 20,
   description: "A super hike on a beautiful island",
   location: "Mafate",
+  userId: "6385cc897547d01ae722ec43",
 };
-
-// afterEach(async () => {
-//   await prisma.activity.deleteMany();
-// });
-
-afterAll(async () => {
-  await prisma.$disconnect();
-});
 
 describe("addActivityController", () => {
   it("should returns a 200 status code if there are no errors when we add a new activity", async () => {
@@ -53,3 +46,15 @@ describe("addActivityController", () => {
     expect(statusCode).toBe(500);
   });
 });
+
+// TODO: Make sure there are some activities before the test
+
+// describe("getAllActivitiesController", () => {
+//   it("should returns a 200 status code and some activities if there are no errors", async () => {
+//     const { statusCode } = await supertest(app).get("/activities");
+
+//     expect(statusCode).toBe(200);
+//   });
+
+//   it("should returns a 500 status code if there any errors", () => {});
+// });

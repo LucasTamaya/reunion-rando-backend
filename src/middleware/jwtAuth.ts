@@ -8,7 +8,7 @@ export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
     jwt.verify(token, process.env.JWT_SECRET!);
     next();
   } catch (err: any) {
-    console.log("Error in the jwt middleware");
+    console.error(err);
     res.clearCookie("token");
     return res.sendStatus(401);
   }

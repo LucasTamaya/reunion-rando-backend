@@ -22,10 +22,11 @@ describe("loginController", () => {
       .post("/login")
       .send(loginBody);
 
-    const mockedUserRole = { role: "particulier" };
-
     expect(statusCode).toBe(200);
-    expect(body).toEqual(mockedUserRole);
+    expect(body).toMatchObject({
+      role: expect.any(String),
+      id: expect.any(String),
+    });
   });
 
   it("should returns a 200 status code and en error message if the user doesn't exists", async () => {

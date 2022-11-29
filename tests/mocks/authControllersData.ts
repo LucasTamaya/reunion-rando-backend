@@ -1,9 +1,12 @@
-export const registerBody = {
+import { UserModel } from "../../src/types/index";
+
+export const registerBody: UserModel = {
   lastname: "doe",
   firstname: "john",
   email: "john.doe@orange.fr",
   password: "123456",
   role: "particulier",
+  avatar: "",
 };
 
 export const registerResponse = {
