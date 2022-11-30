@@ -16,5 +16,6 @@ export interface ActivityModel {
   location: string;
   price: number;
   description: string;
+  photo_src: string;
   userId: string;
 }

@@ -15,7 +15,5 @@ export const getAllActivities = async () => {
     },
   });
 
-  console.log(activities);
-
   return activities;
 };

@@ -12,6 +12,7 @@ const newActivity: ActivityModel = {
   price: 20,
   description: "A super hike on a beautiful island",
   location: "Mafate",
+  photo_src: "photo.jpg",
   userId: "6385cc897547d01ae722ec43",
 };
 
