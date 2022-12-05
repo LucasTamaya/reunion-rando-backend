@@ -15,3 +15,11 @@ export const createNewUser = async ({ password, ...userProps }: UserModel) => {
   });
   return newUser;
 };
+
+export const getAllProviderUsers = async () => {
+  const providerUsers = await prisma.user.findMany({
+    where: { role: "prestataire" },
+  });
+  console.log(providerUsers);
+  return providerUsers;
+};

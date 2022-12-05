@@ -11,7 +11,9 @@ export const createNewActivity = async ({ ...activityData }: ActivityModel) => {
 export const getAllActivities = async () => {
   const activities = await prisma.activity.findMany({
     include: {
-      createdBy: { select: { lastname: true, firstname: true, avatar: true } },
+      createdBy: {
+        select: { lastname: true, firstname: true, avatar: true, email: true },
+      },
     },
   });
 
