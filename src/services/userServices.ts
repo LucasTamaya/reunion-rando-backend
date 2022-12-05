@@ -23,3 +23,11 @@ export const getAllProviderUsers = async () => {
   console.log(providerUsers);
   return providerUsers;
 };
+
+export const getUserData = async (userId: string) => {
+  const userData = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { avatar: true, email: true, lastname: true, firstname: true },
+  });
+  return userData;
+};
