@@ -1,17 +1,29 @@
 import { Request, Response } from "express";
 
-import { ActivityModel } from "../types/index";
+import { ActivityBody } from "../types/index";
 import {
   getAllActivities,
   createNewActivity,
 } from "../services/activityServices";
+import { uploadImageToCloudinary } from "../helpers/cloudinaryUpload";
 
 export const addActivityController = async (req: Request, res: Response) => {
-  const body: ActivityModel = req.body;
+  const { title, location, price, description, userId }: ActivityBody =
+    req.body;
 
   try {
-    await createNewActivity({ ...body });
-    return res.sendStatus(200);
+    const imageUrl = await uploadImageToCloudinary(req);
+
+    const newActivity = await createNewActivity({
+      title,
+      location,
+      description,
+      userId,
+      price: parseInt(price),
+      image_url: imageUrl,
+    });
+
+    return res.status(200).json(newActivity);
   } catch (err: any) {
     console.log(err.message);
     return res.sendStatus(500);

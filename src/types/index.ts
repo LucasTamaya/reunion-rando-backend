@@ -11,11 +11,19 @@ export interface UserModelWithId extends UserModel {
   id: string;
 }
 
+export interface ActivityBody {
+  title: string;
+  location: string;
+  price: string;
+  description: string;
+  userId: string;
+}
+
 export interface ActivityModel {
   title: string;
   location: string;
   price: number;
   description: string;
-  photo_src: string;
+  image_url: string;
   userId: string;
 }
