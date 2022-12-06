@@ -27,7 +27,13 @@ export const getAllProviderUsers = async () => {
 export const getUserData = async (userId: string) => {
   const userData = await prisma.user.findUnique({
     where: { id: userId },
-    select: { avatar: true, email: true, lastname: true, firstname: true },
+    select: {
+      avatar: true,
+      email: true,
+      lastname: true,
+      firstname: true,
+      id: true,
+    },
   });
   return userData;
 };

@@ -19,3 +19,10 @@ export const getAllActivities = async () => {
 
   return activities;
 };
+
+export const getAllProviderActivities = async (userId: string) => {
+  const providerActivities = await prisma.activity.findMany({
+    where: { userId },
+  });
+  return providerActivities;
+};

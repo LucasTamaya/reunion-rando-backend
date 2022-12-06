@@ -4,6 +4,7 @@ import { ActivityBody } from "../types/index";
 import {
   getAllActivities,
   createNewActivity,
+  getAllProviderActivities,
 } from "../services/activityServices";
 import { uploadImageToCloudinary } from "../helpers/cloudinaryUpload";
 
@@ -36,6 +37,26 @@ export const getAllActivitiesController = async (_: Request, res: Response) => {
     return res.status(200).json({ activities });
   } catch (err: any) {
     console.log(err.message);
+    return res.sendStatus(500);
+  }
+};
+
+export const getAllProviderActivitiesController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+
+    const providerActivities = await getAllProviderActivities(id);
+
+    if (!providerActivities) {
+      return res.status(200).json({ activities: [] });
+    } else {
+      return res.status(200).json({ activities: providerActivities });
+    }
+  } catch (err) {
+    console.log(err);
     return res.sendStatus(500);
   }
 };
