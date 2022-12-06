@@ -5,6 +5,7 @@ import {
   getAllActivities,
   createNewActivity,
   getAllProviderActivities,
+  deleteActivity,
 } from "../services/activityServices";
 import { uploadImageToCloudinary } from "../helpers/cloudinaryUpload";
 
@@ -55,6 +56,17 @@ export const getAllProviderActivitiesController = async (
     } else {
       return res.status(200).json({ activities: providerActivities });
     }
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const deleteActivityController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await deleteActivity(id);
+    return res.sendStatus(200);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);

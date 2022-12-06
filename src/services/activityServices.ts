@@ -26,3 +26,9 @@ export const getAllProviderActivities = async (userId: string) => {
   });
   return providerActivities;
 };
+
+export const deleteActivity = async (activityId: string) => {
+  await prisma.activity.delete({
+    where: { id: activityId },
+  });
+};
