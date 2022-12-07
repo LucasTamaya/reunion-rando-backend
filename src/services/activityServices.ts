@@ -1,5 +1,5 @@
 import prisma from "../prisma/client";
-import { ActivityModel } from "../types/index";
+import { ActivityModel, ActivityBody } from "../types/index";
 
 export const createNewActivity = async ({ ...activityData }: ActivityModel) => {
   const newActivity = await prisma.activity.create({
@@ -31,4 +31,22 @@ export const deleteActivity = async (activityId: string) => {
   await prisma.activity.delete({
     where: { id: activityId },
   });
+};
+
+export const updateActivity = async (
+  activityId: string,
+  { ...activityData }: ActivityModel
+) => {
+  console.log(activityId);
+  console.log(activityData);
+
+  const updatedActivity = await prisma.activity.update({
+    where: {
+      id: activityId,
+    },
+    data: {
+      ...activityData,
+    },
+  });
+  return updatedActivity;
 };

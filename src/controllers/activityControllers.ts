@@ -6,14 +6,15 @@ import {
   createNewActivity,
   getAllProviderActivities,
   deleteActivity,
+  updateActivity,
 } from "../services/activityServices";
 import { uploadImageToCloudinary } from "../helpers/cloudinaryUpload";
 
 export const addActivityController = async (req: Request, res: Response) => {
-  const { title, location, price, description, userId }: ActivityBody =
-    req.body;
-
   try {
+    const { title, location, price, description, userId }: ActivityBody =
+      req.body;
+
     const imageUrl = await uploadImageToCloudinary(req);
 
     const newActivity = await createNewActivity({
@@ -35,6 +36,7 @@ export const addActivityController = async (req: Request, res: Response) => {
 export const getAllActivitiesController = async (_: Request, res: Response) => {
   try {
     const activities = await getAllActivities();
+
     return res.status(200).json({ activities });
   } catch (err: any) {
     console.log(err.message);
@@ -65,7 +67,36 @@ export const getAllProviderActivitiesController = async (
 export const deleteActivityController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+
     await deleteActivity(id);
+
+    return res.status(200).json({ activityId: id });
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const updateActivityController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { price, currentImageUrl, ...activityProps }: ActivityBody = req.body;
+    let imageUrl: string;
+
+    if (!currentImageUrl) {
+      imageUrl = await uploadImageToCloudinary(req);
+    } else {
+      imageUrl = currentImageUrl;
+    }
+
+    const updatedActivity = await updateActivity(id, {
+      price: parseInt(price),
+      image_url: imageUrl,
+      ...activityProps,
+    });
+
+    console.log(updatedActivity);
+
     return res.sendStatus(200);
   } catch (err) {
     console.log(err);
