@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 import { getUserByEmail, createNewUser } from "../services/userServices";
 import { UserModel } from "../types/index";
-import { createJwt, sendJwtToClient } from "../services/authServices";
+import { createJwt, sendJwtToClient, clearJwt } from "../services/authServices";
 import { loginErrorResponse } from "../response";
 
 export const registerController = async (req: Request, res: Response) => {
@@ -51,4 +51,9 @@ export const loginController = async (req: Request, res: Response) => {
   } catch (err) {
     return res.sendStatus(500);
   }
+};
+
+export const logoutController = async (_: Request, res: Response) => {
+  clearJwt(res);
+  return res.sendStatus(200);
 };

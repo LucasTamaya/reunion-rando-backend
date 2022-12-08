@@ -5,9 +5,6 @@ export const createJwt = (id: string, role: string) => {
   const token = jwt.sign({ id, role }, process.env.JWT_SECRET!, {
     expiresIn: "1d",
   });
-
-  console.log(token);
-
   return token;
 };
 
@@ -32,4 +29,11 @@ export const decodeJwtPayload = (token: string): JwtPayloads => {
   );
 
   return decodedValue;
+};
+
+export const clearJwt = (res: Response) => {
+  res.clearCookie("token", {
+    sameSite: "none",
+    secure: true,
+  });
 };

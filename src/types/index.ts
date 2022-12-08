@@ -17,7 +17,7 @@ export interface ActivityBody {
   price: string;
   description: string;
   userId: string;
-  currentImageUrl?: string;
+  file?: string;
 }
 
 export interface ActivityModel {

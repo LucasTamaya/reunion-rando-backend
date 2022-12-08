@@ -80,13 +80,13 @@ export const deleteActivityController = async (req: Request, res: Response) => {
 export const updateActivityController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { price, currentImageUrl, ...activityProps }: ActivityBody = req.body;
+    const { price, file, ...activityProps }: ActivityBody = req.body;
     let imageUrl: string;
 
-    if (!currentImageUrl) {
+    if (!file) {
       imageUrl = await uploadImageToCloudinary(req);
     } else {
-      imageUrl = currentImageUrl;
+      imageUrl = file;
     }
 
     const updatedActivity = await updateActivity(id, {

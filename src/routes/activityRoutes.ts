@@ -21,7 +21,7 @@ router.get("/activities/:id", jwtAuth, getAllProviderActivitiesController);
 router.delete("/activity/:id", jwtAuth, deleteActivityController);
 router.patch(
   "/activity/:id",
-  // jwtAuth,
+  jwtAuth,
   upload.single("file"),
   updateActivityController
 );
