@@ -3,11 +3,19 @@ import streamifier from "streamifier";
 
 import cloudinary from "../config/cloudinaryConfig";
 
-export const uploadImageToCloudinary = (req: Request): Promise<string> => {
+interface CloudinaryResponse {
+  secure_url: string;
+  public_id: string;
+}
+
+export const uploadImageToCloudinary = (
+  req: Request
+): Promise<CloudinaryResponse> => {
   return new Promise((resolve, reject) => {
     let stream = cloudinary.uploader.upload_stream((error, result) => {
       if (result) {
-        resolve(result.url);
+        const { secure_url, public_id } = result;
+        resolve({ secure_url, public_id });
       } else {
         reject(error);
       }
@@ -17,4 +25,8 @@ export const uploadImageToCloudinary = (req: Request): Promise<string> => {
       streamifier.createReadStream(req.file.buffer).pipe(stream);
     }
   });
+};
+
+export const deleteImageFromCloudinary = async (publicId: string) => {
+  await cloudinary.uploader.destroy(publicId);
 };

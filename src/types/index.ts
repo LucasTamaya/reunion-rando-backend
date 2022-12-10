@@ -26,5 +26,6 @@ export interface ActivityModel {
   price: number;
   description: string;
   image_url: string;
+  cloudinary_public_id: string;
   userId: string;
 }
