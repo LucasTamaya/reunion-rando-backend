@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 
-import { UserModel } from "../types/index";
+import { UpdateUserBody, UserModel } from "../types/index";
 import prisma from "../prisma/client";
 
 export const getUserByEmail = async (email: string) => {
@@ -36,4 +36,15 @@ export const getUserData = async (userId: string) => {
     },
   });
   return userData;
+};
+
+export const updateUserData = async (
+  userId: string,
+  userData: UpdateUserBody
+) => {
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: { ...userData },
+  });
+  return updatedUser;
 };

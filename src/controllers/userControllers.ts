@@ -1,7 +1,13 @@
 import { Request, Response } from "express";
 
-import { getAllProviderUsers, getUserData } from "../services/userServices";
+import {
+  getAllProviderUsers,
+  getUserData,
+  updateUserData,
+} from "../services/userServices";
 import { decodeJwtPayload } from "../services/authServices";
+import { UpdateUserBody } from "../types";
+import { uploadImageToCloudinary } from "../services/cloudinaryServices";
 
 export const getUserRoleController = async (req: Request, res: Response) => {
   const token: string = req.cookies.token;
@@ -35,6 +41,43 @@ export const getUserDataController = async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({ userData });
+  } catch (err) {
+    console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const updateUserDataController = async (req: Request, res: Response) => {
+  console.log("called here");
+
+  try {
+    const { id } = req.params;
+
+    console.log(id);
+
+    const { avatar, ...userData }: UpdateUserBody = req.body;
+    let avatarUrl: string;
+
+    console.log(req.body);
+    console.log(req.file);
+
+    if (!avatar) {
+      const { secure_url } = await uploadImageToCloudinary(req);
+      avatarUrl = secure_url;
+    } else {
+      avatarUrl = avatar;
+    }
+
+    console.log(avatarUrl);
+
+    const updatedUser = await updateUserData(id, {
+      avatar: avatarUrl,
+      ...userData,
+    });
+
+    console.log(updatedUser);
+
+    return res.sendStatus(200);
   } catch (err) {
     console.log(err);
     return res.sendStatus(500);

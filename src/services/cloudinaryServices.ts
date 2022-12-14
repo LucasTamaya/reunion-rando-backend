@@ -15,6 +15,8 @@ export const uploadImageToCloudinary = (
     let stream = cloudinary.uploader.upload_stream((error, result) => {
       if (result) {
         const { secure_url, public_id } = result;
+        console.log(secure_url);
+
         resolve({ secure_url, public_id });
       } else {
         reject(error);

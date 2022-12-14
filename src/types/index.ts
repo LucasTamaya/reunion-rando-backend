@@ -29,3 +29,10 @@ export interface ActivityModel {
   cloudinary_public_id: string;
   userId: string;
 }
+
+export interface UpdateUserBody {
+  lastname?: string;
+  firstname?: string;
+  email?: string;
+  avatar?: string;
+}

@@ -30,7 +30,7 @@ export const addActivityController = async (req: Request, res: Response) => {
       cloudinary_public_id: public_id,
     });
 
-    return res.status(200).json(newActivity);
+    return res.status(200).json({ newActivity });
   } catch (err: any) {
     console.log(err.message);
     return res.sendStatus(500);
