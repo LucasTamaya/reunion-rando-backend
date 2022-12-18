@@ -86,20 +86,30 @@ export const deleteActivityController = async (req: Request, res: Response) => {
 export const updateActivityController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { price, file, ...activityProps }: ActivityBody = req.body;
-    let imageUrl: string;
+    // if the user doesn't updates the image activity, the file prop will be
+    // the url of the current image. But if he does, the file prop will not
+    // be defined in the req.body but in req.file (because a real file will be passed)
+    const { price, file, cloudinaryPublicId, ...activityProps }: ActivityBody =
+      req.body;
+    const hasUpdatedTheImageActivity = !file;
 
-    if (!file) {
-      const { secure_url } = await uploadImageToCloudinary(req);
+    let imageUrl: string;
+    let cloudinaryImagePublicId: string;
+
+    if (hasUpdatedTheImageActivity) {
+      await deleteImageFromCloudinary(cloudinaryPublicId);
+      const { secure_url, public_id } = await uploadImageToCloudinary(req);
       imageUrl = secure_url;
+      cloudinaryImagePublicId = public_id;
     } else {
       imageUrl = file;
+      cloudinaryImagePublicId = cloudinaryPublicId;
     }
 
     const updatedActivity = await updateActivity(id, {
       price: parseInt(price),
       image_url: imageUrl,
-      cloudinary_public_id: "UPDATES HEREEE",
+      cloudinary_public_id: cloudinaryImagePublicId,
       ...activityProps,
     });
 

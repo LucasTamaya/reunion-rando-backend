@@ -17,7 +17,8 @@ export interface ActivityBody {
   price: string;
   description: string;
   userId: string;
-  file?: string;
+  file: string;
+  cloudinaryPublicId: string;
 }
 
 export interface ActivityModel {
