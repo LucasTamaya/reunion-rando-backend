@@ -14,9 +14,24 @@ import {
 } from "../services/cloudinaryServices";
 
 export const addActivityController = async (req: Request, res: Response) => {
+  const activityWithNoImageProvided = !req.file;
   try {
     const { title, location, price, description, userId }: ActivityBody =
       req.body;
+
+    if (activityWithNoImageProvided) {
+      const newActivity = await createNewActivity({
+        title,
+        location,
+        description,
+        userId,
+        price: parseInt(price),
+        image_url: "",
+        cloudinary_public_id: "",
+      });
+
+      return res.status(200).json({ newActivity });
+    }
 
     const { secure_url, public_id } = await uploadImageToCloudinary(req);
 
@@ -74,7 +89,10 @@ export const deleteActivityController = async (req: Request, res: Response) => {
     const { cloudinaryPublicId } = req.body;
 
     await deleteActivity(id);
-    await deleteImageFromCloudinary(cloudinaryPublicId);
+
+    if (cloudinaryPublicId) {
+      await deleteImageFromCloudinary(cloudinaryPublicId);
+    }
 
     return res.status(200).json({ activityId: id });
   } catch (err) {
