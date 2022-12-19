@@ -15,6 +15,7 @@ import {
 
 export const addActivityController = async (req: Request, res: Response) => {
   const activityWithNoImageProvided = !req.file;
+
   try {
     const { title, location, price, description, userId }: ActivityBody =
       req.body;
@@ -109,12 +110,18 @@ export const updateActivityController = async (req: Request, res: Response) => {
     // be defined in the req.body but in req.file (because a real file will be passed)
     const { price, file, cloudinaryPublicId, ...activityProps }: ActivityBody =
       req.body;
-    const hasUpdatedTheImageActivity = !file;
 
+    const activityWithNoImageProvided = !file && !req.file;
+    const hasUpdatedTheImageActivity = !file;
+    // const hasUpdatedWithTheCurrentImageActivity = file;
     let imageUrl: string;
     let cloudinaryImagePublicId: string;
 
-    if (hasUpdatedTheImageActivity) {
+    if (activityWithNoImageProvided) {
+      imageUrl = "";
+      cloudinaryImagePublicId = "";
+    } else if (hasUpdatedTheImageActivity) {
+      // BUG ICI, ajouter un test si on a pas de file, de ne pas delete
       await deleteImageFromCloudinary(cloudinaryPublicId);
       const { secure_url, public_id } = await uploadImageToCloudinary(req);
       imageUrl = secure_url;
@@ -123,6 +130,18 @@ export const updateActivityController = async (req: Request, res: Response) => {
       imageUrl = file;
       cloudinaryImagePublicId = cloudinaryPublicId;
     }
+
+    // if (hasUpdatedTheImageActivity) {
+    //   await deleteImageFromCloudinary(cloudinaryPublicId);
+    //   const { secure_url, public_id } = await uploadImageToCloudinary(req);
+    //   imageUrl = secure_url;
+    //   cloudinaryImagePublicId = public_id;
+    // }
+
+    // if (hasUpdatedWithTheCurrentImageActivity) {
+    //   imageUrl = file;
+    //   cloudinaryImagePublicId = cloudinaryPublicId;
+    // }
 
     const updatedActivity = await updateActivity(id, {
       price: parseInt(price),

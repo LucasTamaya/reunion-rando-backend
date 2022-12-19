@@ -37,6 +37,8 @@ export const updateActivity = async (
   activityId: string,
   { ...activityData }: ActivityModel
 ) => {
+  console.log(activityData);
+
   const updatedActivity = await prisma.activity.update({
     where: {
       id: activityId,
