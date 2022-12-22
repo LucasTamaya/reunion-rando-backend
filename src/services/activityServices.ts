@@ -22,7 +22,7 @@ export const getAllActivities = async () => {
 
 export const getAllProviderActivities = async (userId: string) => {
   const providerActivities = await prisma.activity.findMany({
-    where: { userId },
+    where: { createdById: userId },
   });
   return providerActivities;
 };
@@ -48,4 +48,30 @@ export const updateActivity = async (
     },
   });
   return updatedActivity;
+};
+
+export const hasBeenAlreadySaved = async (
+  activityId: string,
+  userId: string
+) => {
+  // Query the database for an activity with the given activityId that has the
+  // given userId in its 'savedByIds' field
+  const savedByGivenUserId = await prisma.activity.findMany({
+    where: { id: activityId, savedByIds: { has: userId } },
+  });
+
+  if (savedByGivenUserId.length === 0) {
+    return false;
+  }
+
+  return true;
+};
+
+export const saveActivity = async (activityId: string, userId: string) => {
+  await prisma.activity.update({
+    where: { id: activityId },
+    data: {
+      savedByIds: { push: userId },
+    },
+  });
 };

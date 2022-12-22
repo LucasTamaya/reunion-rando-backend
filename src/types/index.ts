@@ -16,7 +16,7 @@ export interface ActivityBody {
   location: string;
   price: string;
   description: string;
-  userId: string;
+  createdById: string;
   file: string;
   cloudinaryPublicId: string;
 }
@@ -28,7 +28,7 @@ export interface ActivityModel {
   description: string;
   image_url: string;
   cloudinary_public_id: string;
-  userId: string;
+  createdById: string;
 }
 
 export interface UpdateUserBody {

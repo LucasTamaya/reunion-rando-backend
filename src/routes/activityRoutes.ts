@@ -10,6 +10,7 @@ import {
   getAllProviderActivitiesController,
   deleteActivityController,
   updateActivityController,
+  saveActivityController,
 } from "../controllers/activityControllers";
 import { jwtAuth } from "../middleware/jwtAuth";
 
@@ -25,3 +26,4 @@ router.patch(
   upload.single("file"),
   updateActivityController
 );
+router.patch("/activity/:id/save", jwtAuth, saveActivityController);

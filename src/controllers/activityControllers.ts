@@ -7,6 +7,8 @@ import {
   getAllProviderActivities,
   deleteActivity,
   updateActivity,
+  saveActivity,
+  hasBeenAlreadySaved,
 } from "../services/activityServices";
 import {
   deleteImageFromCloudinary,
@@ -17,7 +19,7 @@ export const addActivityController = async (req: Request, res: Response) => {
   const activityWithNoImageProvided = !req.file;
 
   try {
-    const { title, location, price, description, userId }: ActivityBody =
+    const { title, location, price, description, createdById }: ActivityBody =
       req.body;
 
     if (activityWithNoImageProvided) {
@@ -25,7 +27,7 @@ export const addActivityController = async (req: Request, res: Response) => {
         title,
         location,
         description,
-        userId,
+        createdById,
         price: parseInt(price),
         image_url: "",
         cloudinary_public_id: "",
@@ -40,7 +42,7 @@ export const addActivityController = async (req: Request, res: Response) => {
       title,
       location,
       description,
-      userId,
+      createdById,
       price: parseInt(price),
       image_url: secure_url,
       cloudinary_public_id: public_id,
@@ -131,30 +133,38 @@ export const updateActivityController = async (req: Request, res: Response) => {
       cloudinaryImagePublicId = cloudinaryPublicId;
     }
 
-    // if (hasUpdatedTheImageActivity) {
-    //   await deleteImageFromCloudinary(cloudinaryPublicId);
-    //   const { secure_url, public_id } = await uploadImageToCloudinary(req);
-    //   imageUrl = secure_url;
-    //   cloudinaryImagePublicId = public_id;
-    // }
-
-    // if (hasUpdatedWithTheCurrentImageActivity) {
-    //   imageUrl = file;
-    //   cloudinaryImagePublicId = cloudinaryPublicId;
-    // }
-
-    const updatedActivity = await updateActivity(id, {
+    await updateActivity(id, {
       price: parseInt(price),
       image_url: imageUrl,
       cloudinary_public_id: cloudinaryImagePublicId,
       ...activityProps,
     });
 
-    console.log(updatedActivity);
-
     return res.sendStatus(200);
   } catch (err) {
     console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const saveActivityController = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { userId } = req.body;
+
+    console.log(id, userId);
+
+    if (await hasBeenAlreadySaved(id, userId)) {
+      return res.status(409).json({
+        isError: true,
+        message: "L'activité a déjà été ajoutée aux favoris",
+      });
+    }
+    await saveActivity(id, userId);
+
+    return res.sendStatus(200);
+  } catch (err: any) {
+    console.error(err.message);
     return res.sendStatus(500);
   }
 };
