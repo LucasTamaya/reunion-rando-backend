@@ -92,9 +92,9 @@ export const getSavedActivitiesController = async (
   try {
     const { userId } = req.params;
 
-    const savedActivities = await getSavedActivities(userId);
+    const activities = await getSavedActivities(userId);
 
-    return res.status(200).json({ savedActivities });
+    return res.status(200).json({ activities });
   } catch (err: any) {
     console.error(err.message);
     return res.sendStatus(500);
