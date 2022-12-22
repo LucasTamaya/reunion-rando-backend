@@ -9,6 +9,7 @@ import {
   updateActivity,
   saveActivity,
   hasBeenAlreadySaved,
+  unsaveActivity,
 } from "../services/activityServices";
 import {
   deleteImageFromCloudinary,
@@ -149,20 +150,32 @@ export const updateActivityController = async (req: Request, res: Response) => {
 
 export const saveActivityController = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    const { activityId } = req.params;
     const { userId } = req.body;
 
-    console.log(id, userId);
-
-    if (await hasBeenAlreadySaved(id, userId)) {
+    if (await hasBeenAlreadySaved(activityId, userId)) {
       return res.status(409).json({
         isError: true,
         message: "L'activité a déjà été ajoutée aux favoris",
       });
     }
-    await saveActivity(id, userId);
+    await saveActivity(activityId, userId);
 
     return res.sendStatus(200);
+  } catch (err: any) {
+    console.error(err.message);
+    return res.sendStatus(500);
+  }
+};
+
+export const unsaveActivityController = async (req: Request, res: Response) => {
+  try {
+    const { activityId } = req.params;
+    const { userId }: { userId: string } = req.body;
+
+    await unsaveActivity(activityId, userId);
+
+    return res.status(200).json({ activityId });
   } catch (err: any) {
     console.error(err.message);
     return res.sendStatus(500);

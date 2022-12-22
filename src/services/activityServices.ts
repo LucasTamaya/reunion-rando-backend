@@ -86,3 +86,28 @@ export const getSavedActivities = async (userId: string) => {
 
   return savedActivities;
 };
+
+export const unsaveActivity = async (activityId: string, userId: string) => {
+  // retrieve the list of ids of users who have saved this activity
+  const currentData = await prisma.activity.findUnique({
+    where: { id: activityId },
+    select: { savedByIds: true },
+  });
+  console.log("activités courante: ", currentData);
+
+  // filter the list by removing the given userId
+  const filteredSavedByIds = currentData?.savedByIds.filter(
+    (id) => id !== userId
+  );
+  console.log("filtré: ", filteredSavedByIds);
+
+  // use the set method of prisma to update the entire list in the database
+  await prisma.activity.update({
+    where: { id: activityId },
+    data: {
+      savedByIds: {
+        set: filteredSavedByIds,
+      },
+    },
+  });
+};
