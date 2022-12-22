@@ -75,3 +75,11 @@ export const saveActivity = async (activityId: string, userId: string) => {
     },
   });
 };
+
+export const getSavedActivities = async (userId: string) => {
+  const savedActivities = await prisma.activity.findMany({
+    where: { savedByIds: { has: userId } },
+  });
+  console.log(savedActivities);
+  return savedActivities;
+};

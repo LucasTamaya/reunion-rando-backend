@@ -8,6 +8,7 @@ import {
 import { decodeJwtPayload } from "../services/authServices";
 import { UpdateUserBody } from "../types";
 import { uploadImageToCloudinary } from "../services/cloudinaryServices";
+import { getSavedActivities } from "../services/activityServices";
 
 export const getUserRoleController = async (req: Request, res: Response) => {
   const token: string = req.cookies.token;
@@ -80,6 +81,22 @@ export const updateUserDataController = async (req: Request, res: Response) => {
     return res.sendStatus(200);
   } catch (err) {
     console.log(err);
+    return res.sendStatus(500);
+  }
+};
+
+export const getSavedActivitiesController = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const { userId } = req.params;
+
+    const savedActivities = await getSavedActivities(userId);
+
+    return res.status(200).json({ savedActivities });
+  } catch (err: any) {
+    console.error(err.message);
     return res.sendStatus(500);
   }
 };

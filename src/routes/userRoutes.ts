@@ -9,6 +9,7 @@ import {
   getAllProviderUsersController,
   getUserDataController,
   updateUserDataController,
+  getSavedActivitiesController,
 } from "../controllers/userControllers";
 import { jwtAuth } from "../middleware/jwtAuth";
 
@@ -22,4 +23,9 @@ router.patch(
   jwtAuth,
   upload.single("avatar"),
   updateUserDataController
+);
+router.get(
+  "/users/:userId/saved-activities",
+  jwtAuth,
+  getSavedActivitiesController
 );
