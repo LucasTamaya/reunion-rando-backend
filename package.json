@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.ts",
+    "start": "node index.ts",
     "test": "jest -runInBand",
     "lint": "eslint *.{ts,tsx}",
     "prepare": "husky install"
