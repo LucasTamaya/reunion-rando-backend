@@ -21,8 +21,8 @@ export const createServer = () => {
     cors({
       credentials: true,
       origin: productionMode
-        ? "https://reunion-rando.vercel.app/"
-        : "http://localhost/",
+        ? "https://reunion-rando.vercel.app"
+        : "http://localhost",
     })
   );
   // add 15 small middlewares to protect the app
