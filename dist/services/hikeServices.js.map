@@ -1,1 +1,0 @@
-{"version":3,"file":"hikeServices.js","sourceRoot":"","sources":["../../src/services/hikeServices.ts"],"names":[],"mappings":"AAAA,OAAO,MAAM,MAAM,qBAAqB,CAAC;AAEzC,MAAM,CAAC,MAAM,WAAW,GAAG,KAAK,IAAI,EAAE;IACpC,MAAM,KAAK,GAAG,MAAM,MAAM,CAAC,IAAI,CAAC,QAAQ,CAAC,EAAE,MAAM,EAAE,EAAE,IAAI,EAAE,IAAI,EAAE,EAAE,CAAC,CAAC;IACrE,OAAO,KAAK,CAAC;AACf,CAAC,CAAC"}

@@ -24,7 +24,7 @@ export const createServer = () => {
         ? "https://reunion-rando.vercel.app/"
         : "http://localhost/",
     })
-  ); // origin a modifier pour production
+  );
   // add 15 small middlewares to protect the app
   app.use(helmet());
 
