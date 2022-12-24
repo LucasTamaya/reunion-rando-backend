@@ -10,8 +10,8 @@ import {
   getUserDataController,
   updateUserDataController,
   getSavedActivitiesController,
-} from "../controllers/userControllers";
-import { jwtAuth } from "../middleware/jwtAuth";
+} from "../controllers/userControllers.js";
+import { jwtAuth } from "../middleware/jwtAuth.js";
 
 export const router: Router = express.Router();
 

@@ -1,7 +1,7 @@
 import { Request } from "express";
 import streamifier from "streamifier";
 
-import cloudinary from "../config/cloudinaryConfig";
+import cloudinary from "../config/cloudinaryConfig.js";
 
 interface CloudinaryResponse {
   secure_url: string;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { getAllHikes } from "../services/hikeServices";
+import { getAllHikes } from "../services/hikeServices.js";
 
 export const getHikesController = async (_: Request, res: Response) => {
   try {

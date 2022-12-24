@@ -1,10 +1,17 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
-import { getUserByEmail, createNewUser } from "../services/userServices";
-import { UserModel } from "../types/index";
-import { createJwt, sendJwtToClient, clearJwt } from "../services/authServices";
-import { loginErrorResponse } from "../response";
+import { getUserByEmail, createNewUser } from "../services/userServices.js";
+import { UserModel } from "../types/index.js";
+import {
+  createJwt,
+  sendJwtToClient,
+  clearJwt,
+} from "../services/authServices.js";
+
+const loginErrorResponse = {
+  isError: true,
+};
 
 export const registerController = async (req: Request, res: Response) => {
   const body: UserModel = req.body;

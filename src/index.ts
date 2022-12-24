@@ -1,9 +1,9 @@
-require("dotenv").config();
+import dotenv from "dotenv";
 
-import { createServer } from "./src/app";
+import { createServer } from "./app.js";
 
+dotenv.config();
 const PORT: string | number = process.env.PORT || 4000;
-
 const app = createServer();
 
 app.listen(PORT, () => {

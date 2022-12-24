@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 
-import { UpdateUserBody, UserModel } from "../types/index";
-import prisma from "../prisma/client";
+import { UpdateUserBody, UserModel } from "../types/index.js";
+import prisma from "../prisma/client.js";
 
 export const getUserByEmail = async (email: string) => {
   const user = await prisma.user.findUnique({ where: { email } });

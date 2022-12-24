@@ -1,5 +1,5 @@
-import prisma from "../prisma/client";
-import { ActivityModel } from "../types/index";
+import prisma from "../prisma/client.js";
+import { ActivityModel } from "../types/index.js";
 
 export const createNewActivity = async ({ ...activityData }: ActivityModel) => {
   const newActivity = await prisma.activity.create({

@@ -4,11 +4,11 @@ import {
   getAllProviderUsers,
   getUserData,
   updateUserData,
-} from "../services/userServices";
-import { decodeJwtPayload } from "../services/authServices";
-import { UpdateUserBody } from "../types";
-import { uploadImageToCloudinary } from "../services/cloudinaryServices";
-import { getSavedActivities } from "../services/activityServices";
+} from "../services/userServices.js";
+import { decodeJwtPayload } from "../services/authServices.js";
+import { UpdateUserBody } from "../types/index.js";
+import { uploadImageToCloudinary } from "../services/cloudinaryServices.js";
+import { getSavedActivities } from "../services/activityServices.js";
 
 export const getUserRoleController = async (req: Request, res: Response) => {
   const token: string = req.cookies.token;

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { ActivityBody } from "../types/index";
+import { ActivityBody } from "../types/index.js";
 import {
   getAllActivities,
   createNewActivity,
@@ -10,11 +10,11 @@ import {
   saveActivity,
   hasBeenAlreadySaved,
   unsaveActivity,
-} from "../services/activityServices";
+} from "../services/activityServices.js";
 import {
   deleteImageFromCloudinary,
   uploadImageToCloudinary,
-} from "../services/cloudinaryServices";
+} from "../services/cloudinaryServices.js";
 
 export const addActivityController = async (req: Request, res: Response) => {
   const activityWithNoImageProvided = !req.file;
