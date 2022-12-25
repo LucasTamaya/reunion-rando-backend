@@ -9,7 +9,12 @@ import { router as userRoutes } from "./routes/userRoutes.js";
 import { router as hikeRoutes } from "./routes/hikeRoutes.js";
 import { router as activityRoutes } from "./routes/activityRoutes.js";
 
-const productionMode = process.env.NODE_ENV === "production";
+const allowedUrls = [
+  "http://127.0.0.1:5173",
+  "https://reunion-rando.vercel.app",
+  "https://reunion-rando-lucastamaya.vercel.app",
+  "https://reunion-rando-git-master-lucastamaya.vercel.app",
+];
 
 export const createServer = () => {
   const app = express();
@@ -20,9 +25,7 @@ export const createServer = () => {
   app.use(
     cors({
       credentials: true,
-      origin: productionMode
-        ? "https://reunion-rando.vercel.app"
-        : "http://localhost",
+      origin: allowedUrls,
     })
   );
   // add 15 small middlewares to protect the app
